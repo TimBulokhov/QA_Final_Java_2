@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.User;
 
-import static constants.TestData.*;
+import static constants.Endpoints.*;
 import static io.restassured.RestAssured.given;
 
 public class UserClientSteps {
@@ -38,6 +38,6 @@ public class UserClientSteps {
         return given()
                 .header("Authorization",accessToken)
                 .when()
-                .delete(DELETE);
+                .delete(USER);
     }
 }

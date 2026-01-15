@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Test;
 import steps.UserClientSteps;
 
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static steps.UserClientSteps.checkRequestAuthLogin;
@@ -24,7 +25,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
@@ -42,7 +43,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
@@ -52,7 +53,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("User already exists"));
     }
@@ -66,7 +67,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
 
@@ -81,7 +82,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
 
@@ -96,7 +97,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
 
@@ -111,7 +112,7 @@ public class UserCreateTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
 
@@ -128,7 +129,7 @@ public class UserCreateTest extends BaseAPITest {
             userClientSteps.deleteUser(accessToken)
                     .then()
                     .log().all()
-                    .statusCode(202);
+                    .statusCode(SC_ACCEPTED);
 
         }
     }

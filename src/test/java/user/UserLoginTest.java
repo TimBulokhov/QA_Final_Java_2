@@ -10,6 +10,7 @@ import steps.UserClientSteps;
 
 import static constants.TestData.WRONGLOGIN;
 import static constants.TestData.WRONGPASSWORD;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static steps.UserClientSteps.checkRequestAuthLogin;
@@ -23,7 +24,7 @@ public class UserLoginTest extends BaseAPITest {
         createUniqueNewUser(user)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
@@ -40,7 +41,7 @@ public class UserLoginTest extends BaseAPITest {
         User user = new User(email, password);
         checkRequestAuthLogin(user)
                 .then()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
@@ -58,7 +59,7 @@ public class UserLoginTest extends BaseAPITest {
         User user = new User(WRONGLOGIN, password);
         checkRequestAuthLogin(user)
                 .then()
-                .statusCode(401)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
 
@@ -73,7 +74,7 @@ public class UserLoginTest extends BaseAPITest {
         User user = new User(email, WRONGPASSWORD);
         checkRequestAuthLogin(user)
                 .then()
-                .statusCode(401)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
 
@@ -88,7 +89,7 @@ public class UserLoginTest extends BaseAPITest {
         User user = new User(WRONGLOGIN, WRONGPASSWORD);
         checkRequestAuthLogin(user)
                 .then()
-                .statusCode(401)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
 
@@ -105,7 +106,7 @@ public class UserLoginTest extends BaseAPITest {
             userClientSteps.deleteUser(accessToken)
                     .then()
                     .log().all()
-                    .statusCode(202);
+                    .statusCode(SC_ACCEPTED);
 
         }
     }
